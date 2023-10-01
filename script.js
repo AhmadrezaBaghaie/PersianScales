@@ -1,7 +1,16 @@
 // script.js
+let baseUrl;
+if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    // Use the local server URL
+    baseUrl = "http://127.0.0.1:8080"; // Replace with your local server URL
+} else {
+    // Use the GitHub Pages URL
+    baseUrl = "https://ahmadrezabaghaie.github.io/PersianScales"; // Replace with your GitHub Pages URL
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // Load scale data from JSON file
-    fetch("http://127.0.0.1:8080/scales.json") // Relative path to the JSON file
+    fetch("${baseUrl}/scales.json") // Relative path to the JSON file
         .then(response => response.json())
         .then(data => {
             const scalesContainer = document.getElementById("scales-container");
