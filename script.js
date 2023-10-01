@@ -10,7 +10,7 @@ if (window.location.hostname === "127.0.0.1" || window.location.hostname === "lo
 
 document.addEventListener("DOMContentLoaded", function () {
     // Load scale data from JSON file
-    fetch("${baseUrl}/scales.json") // Relative path to the JSON file
+    fetch('${baseUrl}/scales.json') // Relative path to the JSON file
         .then(response => response.json())
         .then(data => {
             const scalesContainer = document.getElementById("scales-container");
