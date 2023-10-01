@@ -8,9 +8,12 @@ if (window.location.hostname === "127.0.0.1" || window.location.hostname === "lo
     baseUrl = "https://ahmadrezabaghaie.github.io/PersianScales"; // Replace with your GitHub Pages URL
 }
 
+// Construct the full URL for the JSON file
+const jsonUrl = `${baseUrl}/scales.json`;
+
 document.addEventListener("DOMContentLoaded", function () {
     // Load scale data from JSON file
-    fetch('${baseUrl}/scales.json') // Relative path to the JSON file
+    fetch(jsonUrl) // Relative path to the JSON file
         .then(response => response.json())
         .then(data => {
             const scalesContainer = document.getElementById("scales-container");
