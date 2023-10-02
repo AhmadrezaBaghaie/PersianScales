@@ -2,21 +2,25 @@
   {
     "name": "Scale 1",
     "image": "scale_images/scale1.png",
-    "audio": "scales_audio/scale1.mp3"
+    "audio": "scales_audio/scale1.mp3",
+	"frequencies": [293, 335, 349, 392, 440, 466, 523, 587, 587, 523, 466, 440, 392, 349, 335, 293]
   },
   {
     "name": "Scale 2",
     "image": "scale_images/scale2.png",
-    "audio": "scales_audio/scale2.mp3"
+    "audio": "scales_audio/scale2.mp3",
+	"frequencies": [293, 335, 349, 392, 414, 493, 523, 587, 587, 523, 493, 414, 392, 349, 335, 293]
   },
   {
     "name": "Scale 3",
     "image": "scale_images/scale3.png",
-    "audio": "scales_audio/scale3.mp3"
+    "audio": "scales_audio/scale3.mp3",
+	"frequencies": [100, 50, 150]
   },
   {
     "name": "Scale 4",
     "image": "scale_images/scale4.png",
-    "audio": "scales_audio/scale4.mp3"
+    "audio": "scales_audio/scale4.mp3",
+	"frequencies": [100, 50, 150]
   }
 ]

@@ -9,13 +9,14 @@ if (window.location.hostname === "127.0.0.1" || window.location.hostname === "lo
 }
 
 // Construct the full URL for the JSON file
-const jsonUrl = `${baseUrl}/scales.json`;
+const jsonUrl = `${baseUrl}/scales.json?_=${new Date().getTime()}`;
 
 document.addEventListener("DOMContentLoaded", function () {
     // Load scale data from JSON file
     fetch(jsonUrl) // Relative path to the JSON file
         .then(response => response.json())
         .then(data => {
+			console.log(data);
             const scalesContainer = document.getElementById("scales-container");
 
             data.forEach(scale => {
@@ -40,7 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const stopButton = document.createElement("button");
                 stopButton.classList.add("stop-button");
-                stopButton.textContent = "Stop";
+                stopButton.textContent = "Stop";						
+				
 
                 playButton.addEventListener("click", function () {
                     audio.play();
@@ -85,6 +87,70 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 				});
 				
+				
+				const scaleButton = document.createElement("button");
+				scaleButton.classList.add("scale-button");
+				scaleButton.textContent = "Scale"; // You can change the button text if needed
+
+				// Define a flag to track whether the scale is currently playing
+				let isScalePlaying = false;
+
+				scaleButton.addEventListener("click", function () {
+					
+					// Check if the scale is already playing; if so, don't do anything
+					if (isScalePlaying) {
+						return;
+					}
+
+					// Set the flag to indicate that the scale is playing
+					isScalePlaying = true;
+					
+					// Create an AudioContext
+					const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+					// Access the frequencies for the current scale
+					const frequencies = scale.frequencies; // This should be inside the loop
+
+					// Create an index to keep track of the current frequency
+					let currentIndex = 0;
+
+					// Function to play the next frequency
+					function playNextFrequency() {
+						if (currentIndex < frequencies.length) {
+							const frequency = frequencies[currentIndex];
+
+							const oscillator = audioContext.createOscillator();
+							oscillator.type = "sine"; // You can change the waveform type if needed
+							oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+							oscillator.connect(audioContext.destination);
+
+							// Start the oscillator
+							oscillator.start();
+
+							// Stop the oscillator after half a second (0.5 seconds)
+							oscillator.stop(audioContext.currentTime + 1); // Adjust the duration as needed
+
+							// Increment the index to play the next frequency
+							currentIndex++;
+
+							// Schedule the next frequency to be played
+							setTimeout(playNextFrequency, 1050); // Delay for half a second before playing the next frequency
+							
+							// Check if all frequencies have been played
+							if (currentIndex === frequencies.length) {
+								// Reset the flag to indicate that playback is complete
+								isScalePlaying = false;
+							}
+						}
+					}
+
+					// Start playing frequencies
+					playNextFrequency();
+				});
+
+				
+				
 
                 scaleDiv.appendChild(img);
                 scaleDiv.appendChild(audio);
@@ -92,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 scaleDiv.appendChild(pauseButton);
                 scaleDiv.appendChild(stopButton);
 				scaleDiv.appendChild(speedButton);
+				scaleDiv.appendChild(scaleButton);
 
                 scalesContainer.appendChild(scaleDiv);
             });
